@@ -13,7 +13,7 @@
     rel="stylesheet">
   <link href="../css/style.css" rel="stylesheet" />
 
-  <script type="module" src="../js/pages/home.js" defer async></script>
+  <script type="module" src="../js/pages/home.js" async></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -59,13 +59,6 @@
         <h2>Une gamme d'articles exclusifs</h2>
       </div>
       <section class="items" id="items">
-        <!--           <a href="./product.html?id=42">
-            <article>
-              <img src=".../product01.jpg" alt="Lorem ipsum dolor sit amet, Kanap name1">
-              <h3 class="productName">Kanap name1</h3>
-              <p class="productDescription">Dis enim malesuada risus sapien gravida nulla nisl arcu. Dis enim malesuada risus sapien gravida nulla nisl arcu.</p>
-            </article>
-          </a> -->
       </section>
     </div>
   </main>
@@ -94,14 +87,16 @@
     </div>
   </footer>
 
-  <a href="./product.html?id=42" id="productTemplate" style="display: none;">
-    <article>
-      <img src=".../product01.jpg" alt="Lorem ipsum dolor sit amet, Kanap name1">
-      <h3 class="productName">Kanap name1</h3>
-      <p class="productDescription">Dis enim malesuada risus sapien gravida nulla nisl arcu. Dis enim malesuada risus
-        sapien gravida nulla nisl arcu.</p>
-    </article>
-  </a>
+  <template id="productTemplate">
+    <a href="./product.html?id=42">
+      <article>
+        <img src=".../product01.jpg" alt="Lorem ipsum dolor sit amet, Kanap name1">
+        <h3 class="productName">Kanap name1</h3>
+        <p class="productDescription">Dis enim malesuada risus sapien gravida nulla nisl arcu. Dis enim malesuada risus
+          sapien gravida nulla nisl arcu.</p>
+      </article>
+    </a>
+  </template>
 </body>
 
 </html>

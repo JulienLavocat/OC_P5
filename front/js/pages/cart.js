@@ -5,7 +5,9 @@ import Cart from "../cart.service.js";
  * @param {*} item
  */
 function addCartItem(item) {
-	const template = document.getElementById("cartItemTemplate").cloneNode(true);
+	const template = document
+		.getElementById("cartItemTemplate")
+		.content.cloneNode(true);
 
 	const img = template.querySelector(".cart__item__img img");
 	img.src = item.imageUrl;
@@ -30,8 +32,10 @@ function addCartItem(item) {
 			template.remove();
 		};
 
-	template.removeAttribute("style");
 	document.getElementById("cart__items").appendChild(template);
 }
 
 Object.values(Cart.getCart()).forEach(addCartItem);
+
+document.getElementById("totalQuantity").innerText = Cart.getTotalQuantity();
+document.getElementById("totalPrice").innerText = Cart.getTotalPrice();

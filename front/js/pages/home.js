@@ -6,9 +6,11 @@ import * as api from "../api.service.js";
  * @param {{altTxt: string, colors: string[], description: string, imageUrl: string, name: string, price: number, _id: string}} product
  */
 function appendProduct(product) {
-	const itemNode = document.getElementById("productTemplate").cloneNode(true);
+	const itemNode = document
+		.getElementById("productTemplate")
+		.content.cloneNode(true);
 
-	itemNode.href = `./product.html?id=${product?._id}`;
+	itemNode.querySelector("a").href = `./product.html?id=${product?._id}`;
 
 	itemNode.querySelector("h3").innerText = product.name;
 
@@ -18,8 +20,6 @@ function appendProduct(product) {
 
 	itemNode.querySelector("p").innerText = product.description;
 
-	// Makes template visible by removing the added style property "display: none"
-	itemNode.removeAttribute("style");
 	document.getElementById("items").appendChild(itemNode);
 }
 

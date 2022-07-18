@@ -30,6 +30,10 @@ class Cart {
 		};
 	}
 
+	/**
+	 * Delete an item from the cart
+	 * @param {*} item
+	 */
 	delete(item) {
 		delete this.#cart[`${item._id}-${item.color}`];
 	}
@@ -39,6 +43,26 @@ class Cart {
 	 */
 	getCart() {
 		return this.#cart;
+	}
+
+	/**
+	 * Returns the total quantity of items in cart
+	 * @returns {number}
+	 */
+	getTotalQuantity() {
+		return Object.values(this.#cart)
+			.map((e) => e.amount)
+			.reduce((prev, next) => (prev += next));
+	}
+
+	/**
+	 * Returns the total quantity of items in cart
+	 * @returns {number}
+	 */
+	getTotalPrice() {
+		return Object.values(this.#cart).reduce(
+			(prev, next) => (prev += next.price * next.amount)
+		);
 	}
 }
 
