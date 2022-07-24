@@ -69,13 +69,15 @@
             <form method="get" class="cart__order__form" id="cartOrderForm">
               <div class="cart__order__form__question">
                 <label for="firstName">Prénom: </label>
-                <input type="text" name="firstName" id="firstName" required minlength="1">
+                <input type="text" name="firstName" id="firstName" required minlength="1" pattern="^[a-zA-Z]+$"
+                  title="No numbers are allowed in this field">
                 <p id="firstNameErrorMsg">
                 </p>
               </div>
               <div class="cart__order__form__question">
                 <label for="lastName">Nom: </label>
-                <input type="text" name="lastName" id="lastName" required minlength="1">
+                <input type="text" name="lastName" id="lastName" required minlength="1" pattern="^[a-zA-Z]+$"
+                  title="No numbers are allowed in this field">
                 <p id="lastNameErrorMsg"></p>
               </div>
               <div class="cart__order__form__question">
