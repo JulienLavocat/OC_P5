@@ -19,14 +19,20 @@ class Cart {
 	}
 
 	/**
-	 * List all available products
+	 * Add product to cart
+	 * @param {any} product product to add
+	 * @param {any} amount amount of product to add
+	 * @param {any} overrideExisting if an existing product already exists, set the amount to the value passed in arguments instead of incrementing it
 	 * @returns {Promise<{altTxt: string, color: string, description: string, imageUrl: string, name: string, _id: string}[]>}
 	 */
-	addToCart(product, amount = 1) {
+	addToCart(product, amount = 1, overrideExisting = false) {
 		const existingItem = this.#cart[`${product._id}-${product.color}`];
 		this.#cart[`${product._id}-${product.color}`] = {
 			...product,
-			amount: existingItem ? existingItem.amount + amount : amount,
+			amount:
+				existingItem && !overrideExisting
+					? existingItem.amount + amount
+					: amount,
 		};
 	}
 
