@@ -45,6 +45,7 @@ function addCartItem(item) {
 function renderCart() {
 	const cart = Object.values(Cart.getCart());
 
+	// Display empty cart message and disable form when there is no items in cart
 	if (!cart || cart.length === 0) {
 		const p = document.createElement("p");
 		p.style.textAlign = "center";
@@ -52,12 +53,19 @@ function renderCart() {
 		document.getElementById("cart__items").appendChild(p);
 
 		updatePriceAndQuantity(0, 0);
+
+		document.getElementsByClassName("form.cart__order__form").onsubmit = (e) =>
+			e.preventDefault();
 		return;
 	}
 
+	// Remove all cart-items from previous renderCart() call, add new cart's content and update price
 	removeAllChildNodes(document.getElementById("cart__items"));
 	cart.forEach(addCartItem);
 	updatePriceAndQuantity();
+
+	// Handle form submit
+	document.getElementById("cartOrderForm").onsubmit = handlePlaceOrder;
 }
 
 function updatePriceAndQuantity(
@@ -66,6 +74,19 @@ function updatePriceAndQuantity(
 ) {
 	document.getElementById("totalQuantity").innerText = quantity;
 	document.getElementById("totalPrice").innerText = price;
+}
+
+async function handlePlaceOrder(event) {
+	event.preventDefault();
+
+	// Cart's form is a simple [key(string),value(string)] so we can simply use a FormData to capture all fields
+	// and fromEntries to convert it to a POJO
+	// We require no special validation so all validation is handled by the browser using HTML's properties
+	const contact = Object.fromEntries(new FormData(event.target));
+
+	const order = await Cart.submitOrder(contact);
+	console.log(order);
+	window.location = "./confirmation.html?orderId=" + order.orderId;
 }
 
 renderCart();

@@ -1,3 +1,5 @@
+import { orderProducts } from "./api.service.js";
+
 const CART_KEY = "customer-cart";
 
 class Cart {
@@ -45,10 +47,10 @@ class Cart {
 	}
 
 	/**
-	 * Returns the cart
+	 * Returns a copy of the cart
 	 */
 	getCart() {
-		return this.#cart;
+		return { ...this.#cart };
 	}
 
 	/**
@@ -69,6 +71,24 @@ class Cart {
 		return Object.values(this.#cart).reduce(
 			(prev, next) => (prev += next.price * next.amount),
 			0
+		);
+	}
+
+	/**
+	 * Place an order for the requested products
+	 * @param {{
+	 *   firstName: string,
+	 *   lastName: string,
+	 *   address: string,
+	 *   city: string,
+	 *   email: string
+	 * }} contact
+	 * @returns {Promise<any>}
+	 */
+	submitOrder(contact) {
+		return orderProducts(
+			contact,
+			Object.values(this.getCart()).map((e) => e._id)
 		);
 	}
 }
