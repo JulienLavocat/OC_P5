@@ -7,7 +7,8 @@ import Cart from "../cart.service.js";
 function addCartItem(item) {
 	const template = document
 		.getElementById("cartItemTemplate")
-		.content.cloneNode(true);
+		.content.cloneNode(true)
+		.querySelector("article");
 
 	const img = template.querySelector(".cart__item__img img");
 	img.src = item.imageUrl;
@@ -31,11 +32,27 @@ function addCartItem(item) {
 			Cart.delete(item);
 			template.remove();
 		};
-
 	document.getElementById("cart__items").appendChild(template);
 }
 
-Object.values(Cart.getCart()).forEach(addCartItem);
+function renderCart() {
+	const cart = Object.values(Cart.getCart());
 
-document.getElementById("totalQuantity").innerText = Cart.getTotalQuantity();
-document.getElementById("totalPrice").innerText = Cart.getTotalPrice();
+	if (!cart || cart.length === 0) {
+		const p = document.createElement("p");
+		p.style.textAlign = "center";
+		p.innerText = "Votre panier est vide";
+		document.getElementById("cart__items").appendChild(p);
+
+		document.getElementById("totalQuantity").innerText = "0";
+		document.getElementById("totalPrice").innerText = "0";
+		return;
+	}
+
+	cart.forEach(addCartItem);
+
+	document.getElementById("totalQuantity").innerText = Cart.getTotalQuantity();
+	document.getElementById("totalPrice").innerText = Cart.getTotalPrice();
+}
+
+renderCart();

@@ -61,7 +61,8 @@ class Cart {
 	 */
 	getTotalPrice() {
 		return Object.values(this.#cart).reduce(
-			(prev, next) => (prev += next.price * next.amount)
+			(prev, next) => (prev += next.price * next.amount),
+			0
 		);
 	}
 }
