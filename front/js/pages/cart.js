@@ -1,5 +1,8 @@
+import { getPrices } from "../api.service.js";
 import Cart from "../cart.service.js";
 import { removeAllChildNodes } from "../utils/index.js";
+
+let prices;
 
 /**
  * Add a new cart item to the list
@@ -24,7 +27,7 @@ function addCartItem(item) {
 
 	template.querySelector(
 		"div.cart__item__content__description > p:nth-child(3)"
-	).innerText = `${item.price} €`;
+	).innerText = `${prices[item._id]} €`;
 
 	const quantity = template.querySelector("input[name=itemQuantity]");
 	quantity.value = item.amount;
@@ -42,7 +45,9 @@ function addCartItem(item) {
 	document.getElementById("cart__items").appendChild(template);
 }
 
-function renderCart() {
+async function renderCart() {
+	prices = await getPrices();
+
 	const cart = Object.values(Cart.getCart());
 
 	// Display empty cart message and disable form when there is no items in cart
@@ -70,7 +75,7 @@ function renderCart() {
 
 function updatePriceAndQuantity(
 	quantity = Cart.getTotalQuantity(),
-	price = Cart.getTotalPrice()
+	price = Cart.getTotalPrice(prices)
 ) {
 	document.getElementById("totalQuantity").innerText = quantity;
 	document.getElementById("totalPrice").innerText = price;

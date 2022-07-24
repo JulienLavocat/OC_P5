@@ -22,6 +22,17 @@ async function request(url, method, body) {
 export const listProducts = () => request();
 
 /**
+ * Return prices for all available products
+ * @returns {Promise<{altTxt: string, colors: string[], description: string, imageUrl: string, name: string, price: number, _id: string}[]>}
+ */
+export const getPrices = async () => {
+	const products = await listProducts();
+	return Object.fromEntries(
+		products.map((product) => [product._id, product.price])
+	);
+};
+
+/**
  * Get a product's details
  * @param {string} productId
  * @returns {Promise<{altTxt: string, colors: string[], description: string, imageUrl: string, name: string, price: number, _id: string}>}

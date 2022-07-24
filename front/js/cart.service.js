@@ -28,6 +28,8 @@ class Cart {
 	 * @returns {Promise<{altTxt: string, color: string, description: string, imageUrl: string, name: string, _id: string}[]>}
 	 */
 	addToCart(product, amount = 1, overrideExisting = false) {
+		delete product.price;
+
 		const existingItem = this.#cart[`${product._id}-${product.color}`];
 		this.#cart[`${product._id}-${product.color}`] = {
 			...product,
@@ -67,9 +69,9 @@ class Cart {
 	 * Returns the total quantity of items in cart
 	 * @returns {number}
 	 */
-	getTotalPrice() {
+	getTotalPrice(prices) {
 		return Object.values(this.#cart).reduce(
-			(prev, next) => (prev += next.price * next.amount),
+			(prev, next) => (prev += prices[next._id] * next.amount),
 			0
 		);
 	}

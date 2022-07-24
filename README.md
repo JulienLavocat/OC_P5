@@ -4,7 +4,7 @@
 -   ~~Redirect to / when a product is added to cart~~
 -   ~~Change product page's title with product's title~~
 -   ~~Fix total price (reduce starting with current object instead of 0)~~
--   Remove prices from localStorage
+-   ~~Remove prices from localStorage~~
 -   ~~Create order~~
 -   ~~Confirmation page~~
 
