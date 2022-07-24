@@ -42,6 +42,8 @@ function setEvents(product) {
  * @param {{altTxt: string, colors: string[], description: string, imageUrl: string, name: string, price: number, _id: string}} product
  */
 function setProduct(product) {
+	document.title = product.name;
+
 	const img = document.createElement("img");
 	img.src = product.imageUrl;
 	img.alt = product.altTxt;
