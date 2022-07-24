@@ -34,6 +34,7 @@ function setEvents(product) {
 			cartItem,
 			parseInt(document.getElementById("quantity").value)
 		);
+		window.location = "./cart.html";
 	};
 }
 
