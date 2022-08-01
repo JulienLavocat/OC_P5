@@ -61,7 +61,20 @@ function setProduct(product) {
 
 document.getElementById("addToCart").disabled = true;
 
+(async () => {
+	try {
+		setProduct(
+			await api.getProduct(
+				new URLSearchParams(window.location.search).get("id")
+			)
+		);
+	} catch (error) {
+		document.querySelector("section.item > article").remove();
+		const errorNode = document.createElement("p");
+		errorNode.innerText =
+			"Une erreur s'est produite, veuillez réessayer plus tard.";
+		document.querySelector("section.item").appendChild(errorNode);
+	}
+})();
+
 // TODO: Add catch to display an error
-api
-	.getProduct(new URLSearchParams(window.location.search).get("id"))
-	.then(setProduct);

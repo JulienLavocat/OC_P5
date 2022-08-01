@@ -23,4 +23,14 @@ function appendProduct(product) {
 	document.getElementById("items").appendChild(itemNode);
 }
 
-api.listProducts().then((items) => items.forEach(appendProduct));
+(async () => {
+	try {
+		const products = await api.listProducts();
+		products.forEach(appendProduct);
+	} catch (error) {
+		const errorNode = document.createElement("p");
+		errorNode.innerText =
+			"Une erreur s'est produite, veuillez réessayer plus tard.";
+		document.getElementById("items").appendChild(errorNode);
+	}
+})();

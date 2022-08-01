@@ -46,31 +46,41 @@ function addCartItem(item) {
 }
 
 async function renderCart() {
-	prices = await getPrices();
+	try {
+		prices = await getPrices();
 
-	const cart = Object.values(Cart.getCart());
+		const cart = Object.values(Cart.getCart());
 
-	// Display empty cart message and disable form when there is no items in cart
-	if (!cart || cart.length === 0) {
-		const p = document.createElement("p");
-		p.style.textAlign = "center";
-		p.innerText = "Votre panier est vide";
-		document.getElementById("cart__items").appendChild(p);
+		// Display empty cart message and disable form when there is no items in cart
+		if (!cart || cart.length === 0) {
+			const p = document.createElement("p");
+			p.style.textAlign = "center";
+			p.innerText = "Votre panier est vide";
+			document.getElementById("cart__items").appendChild(p);
 
-		updatePriceAndQuantity(0, 0);
+			updatePriceAndQuantity(0, 0);
 
-		document.getElementsByClassName("form.cart__order__form").onsubmit = (e) =>
-			e.preventDefault();
-		return;
+			document.getElementsByClassName("form.cart__order__form").onsubmit = (
+				e
+			) => e.preventDefault();
+			return;
+		}
+
+		// Remove all cart-items from previous renderCart() call, add new cart's content and update price
+		removeAllChildNodes(document.getElementById("cart__items"));
+		cart.forEach(addCartItem);
+		updatePriceAndQuantity();
+
+		// Handle form submit
+		document.getElementById("cartOrderForm").onsubmit = handlePlaceOrder;
+	} catch (error) {
+		document.getElementById("cartAndFormContainer").remove();
+		const errorNode = document.createElement("p");
+		errorNode.innerText =
+			"Une erreur s'est produite, veuillez réessayer plus tard.";
+		errorNode.style.textAlign = "center";
+		document.getElementById("limitedWidthBlock").appendChild(errorNode);
 	}
-
-	// Remove all cart-items from previous renderCart() call, add new cart's content and update price
-	removeAllChildNodes(document.getElementById("cart__items"));
-	cart.forEach(addCartItem);
-	updatePriceAndQuantity();
-
-	// Handle form submit
-	document.getElementById("cartOrderForm").onsubmit = handlePlaceOrder;
 }
 
 function updatePriceAndQuantity(
